@@ -108,16 +108,28 @@ export default function InvoicePreview({ data, forwardedRef }: Props) {
             </tr>
           </thead>
           <tbody>
-            {data.items.map((item) => (
-              <tr key={item.id}>
-                <td className="col-desc">{item.description}</td>
-                <td className="col-hsn" style={{ textAlign: 'center' }}>{item.hsnCode}</td>
-                <td className="col-qty" style={{ textAlign: 'center' }}>{item.quantity}</td>
-                <td className="col-unit" style={{ textAlign: 'center' }}>{item.unit}</td>
-                <td className="col-rate" style={{ textAlign: 'right' }}>{parseFloat(String(item.rate)).toFixed(2)}</td>
-                <td className="col-amount" style={{ textAlign: 'right' }}>{formatCurrency(item.amount)}</td>
-              </tr>
-            ))}
+            {data.items.map((item) => {
+              const hasNoRate = !item.rate || Number(item.rate) === 0 || isNaN(Number(item.rate));
+              const hasNoAmount = !item.amount || Number(item.amount) === 0 || isNaN(Number(item.amount));
+              const hasNoUnit = !item.unit || item.unit.trim() === '';
+              
+              // If unit, rate, and amount are all blank/zero, treat it as a bold header/note.
+              const isHeaderDesc = hasNoUnit && hasNoRate && hasNoAmount;
+              
+              // We also hide qty if it's 0 or empty so we don't display a random 0.
+              const renderQty = (!item.quantity || Number(item.quantity) === 0) ? '' : item.quantity;
+              
+              return (
+                <tr key={item.id}>
+                  <td className="col-desc" style={{ fontWeight: isHeaderDesc ? 700 : 400 }}>{item.description}</td>
+                  <td className="col-hsn" style={{ textAlign: 'center' }}>{item.hsnCode}</td>
+                  <td className="col-qty" style={{ textAlign: 'center' }}>{isHeaderDesc ? '' : renderQty}</td>
+                  <td className="col-unit" style={{ textAlign: 'center' }}>{item.unit}</td>
+                  <td className="col-rate" style={{ textAlign: 'right' }}>{hasNoRate ? '' : parseFloat(String(item.rate)).toFixed(2)}</td>
+                  <td className="col-amount" style={{ textAlign: 'right' }}>{hasNoAmount ? '' : formatCurrency(item.amount)}</td>
+                </tr>
+              );
+            })}
             {/* Padding rows */}
             {Array.from({ length: paddingRows }).map((_, i) => (
               <tr key={`pad-${i}`} style={{ height: ROW_H }}>
