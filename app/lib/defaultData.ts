@@ -38,7 +38,7 @@ export const defaultInvoiceData: InvoiceData = {
     address: '10, New Manickam Street,\nPurasawalkam, Chennai-600 007.',
     city: 'Chennai',
     phone1: '9940045045',
-    phone2: '9003111944',
+    phone2: '9382883116',
     gstin: '33ANQPS5104A1ZA',
     signatory: 'Vel Tex',
   },

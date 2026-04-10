@@ -169,7 +169,7 @@ export default function InvoiceForm({ data, onChange }: Props) {
               className={inp} 
               value={data.company.phone2} 
               onChange={e => update('company.phone2', e.target.value)} 
-              placeholder="9003111944"
+              placeholder="9382883116"
               readOnly={!isCompanyEdit}
               style={{ opacity: isCompanyEdit ? 1 : 0.65 }}
             />
