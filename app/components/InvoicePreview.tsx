@@ -9,8 +9,8 @@ interface Props {
   forwardedRef?: React.RefObject<HTMLDivElement | null>;
 }
 
-const ROW_H = '28px';
-const CELL_PAD = '7px 11px';
+const ROW_H = '26px';
+const CELL_PAD = '6px 9px';
 const BORDER = '1px solid #d1d5db';
 const FONT_BASE = '12px';
 const FONT_SMALL = '10.5px';
@@ -27,7 +27,7 @@ export default function InvoicePreview({ data, forwardedRef }: Props) {
   const sgstPct       = parseFloat(String(data.sgstPercent)) || 0;
 
   // Pad items so invoice fills the A4 page
-  const minRows    = 13;
+  const minRows    = 11;
   const paddingRows = Math.max(0, minRows - data.items.length);
 
   return (
